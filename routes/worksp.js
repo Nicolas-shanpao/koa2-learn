@@ -1,10 +1,10 @@
 const router = require('koa-router')()
 const Redis = require('koa-redis')
-const Person = require('../dbs/models/person')
+const Work = require('../dbs/models/work')
 
 const Store = new Redis().client
 
-router.prefix('/users')
+router.prefix('/worksp')
 
 router.get('/', function(ctx, next) {
   ctx.body = 'this is a users response!'
@@ -21,12 +21,12 @@ router.get('/fix',async function(ctx){
   }
 })
 
-router.post('/addPerson', async function(ctx) {
+router.post('/addWork', async function(ctx) {
   console.log(ctx.request.body)
-  const person = new Person({name: ctx.request.body.name, age: ctx.request.body.age})
+  const work = new Work({name: ctx.request.body.name, type: ctx.request.body.type})
   let code
   try {
-    await person.save()
+    await work.save()
     code = 0
   } catch (e) {
     code = -1
@@ -36,9 +36,9 @@ router.post('/addPerson', async function(ctx) {
   }
 })
 
-router.post('/getPerson', async function(ctx) {
-  const result = await Person.findOne({name: ctx.request.body.name})
-  const results = await Person.find({name: ctx.request.body.name})
+router.post('/getWork', async function(ctx) {
+  const result = await Work.findOne({name: ctx.request.body.name})
+  const results = await Work.find({name: ctx.request.body.name})
   ctx.body = {
     code: 0,
     result,
@@ -46,19 +46,19 @@ router.post('/getPerson', async function(ctx) {
   }
 })
 
-router.post('/updatePerson',async function(ctx){
-  const result = await Person.where({
+router.post('/updateWork',async function(ctx){
+  const result = await Work.where({
     name: ctx.request.body.name
   }).update({
-    age: ctx.request.body.age
+    type: ctx.request.body.type
   })
   ctx.body={
     code:0
   }
 })
 
-router.post('/removePerson',async function(ctx){
-  const result = await Person.where({
+router.post('/removeWork',async function(ctx){
+  const result = await Work.where({
     name: ctx.request.body.name
   }).remove()
 
