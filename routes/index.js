@@ -1,9 +1,9 @@
-const router = require('koa-router')()
+const router = require('koa-router')() // 路由中间件
 
 router.get('/', async (ctx, next) => {
-  global.console.log('index2')
+  console.log('index2')
   ctx.cookies.set('pvid',Math.random())
-  await ctx.render('index', {
+  await ctx.render('index', { // 渲染页面
     title: 'Hello Koa 2!'
   })
 })
@@ -20,17 +20,17 @@ router.get('/json', async (ctx, next) => {
 })
 
 router.get('/testAsync',async (ctx)=>{
-  global.console.log('start',new Date().getTime())
+  console.log('start',new Date().getTime())
   const a = await new Promise((resolve,reject)=>{
     setTimeout(function () {
-      global.console.log('async a',new Date().getTime())
+      console.log('async a',new Date().getTime())
       resolve('ab')
     }, 1000);
   })
   const b= await 123
   const c= await new Promise((resolve,reject)=>{
     setTimeout(function () {
-      global.console.log('async c',new Date().getTime())
+      console.log('async c',new Date().getTime())
       resolve('abc')
     }, 2000);
   })
