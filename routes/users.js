@@ -16,7 +16,7 @@ router.get('/bar', function (ctx, next) {
 // 不通过session设置redis的key
 router.get('/fix', async function (ctx) {
   console.log('开始')
-  const st = await Store.hset('fix','name',Math.random())
+  const st = await Store.hset('fix', 'name', Math.random())
   console.log('结束')
   ctx.body = {
     code: 0
@@ -61,9 +61,9 @@ router.post('/updatePerson', async function (ctx) {
 })
 // 删除
 router.post('/removePerson', async function (ctx) {
-  const result = await Person.where({
+  const result = await Person.remove({
     name: ctx.request.body.name
-  }).remove()
+  })
 
   ctx.body = {
     code: 0,
