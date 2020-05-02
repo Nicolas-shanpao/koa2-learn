@@ -82,7 +82,8 @@ app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(worksp.routes(), worksp.allowedMethods())
 mongoose.connect(dbConfig.dbs, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
 // error-handling
 app.on('error', (err, ctx) => {
